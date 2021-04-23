@@ -1,0 +1,34 @@
+﻿@model VimaruAsset.Models.WareHouse
+
+<div class="modal fade" id="delete-model" tabindex="-1" role="dialog" aria-labelledby="delete-model-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body form-horizontal">
+                <form class="container" asp-action="Delete" enctype="multipart/form-data">
+                    <div class=" col-12 ml-auto mr-auto container">
+                        <div class="row pl-2">
+                            <div class="col-6">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row pl-2">
+                            <div class="col-12">
+                                <label asp-for="Address" class="control-label"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Thoát</button>
+                <button type="button" class="btn btn-danger" data-save="modal" localize-content>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

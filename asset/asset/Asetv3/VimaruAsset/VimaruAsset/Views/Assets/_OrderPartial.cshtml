@@ -1,0 +1,309 @@
+﻿@model VimaruAsset.Models.Assets
+
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-xl modal-dialog ">
+        <div class="modal-content container">
+            <div class="modal-body container">
+                <div class="row">
+                    <h5 class="col-3 text-primary">Nhập tài sản</h5>
+                    <h5 id="wareHouseName" class="col-7 mr-0 ml-auto text-primary text-right"></h5>
+                </div>
+                <hr />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" id="wareHouseID" name="wareHouseID" value="" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Tên tài sản <span class="text-danger">*</span></label>
+                        <input asp-for="Name" required class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-4">
+                                <label asp-for="MFG" class="control-label"></label>
+                                <input asp-for="MFG" required class="form-control" />
+                                <span asp-validation-for="MFG" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="Guarantee" class="control-label"></label>
+                                <input asp-for="Guarantee" required class="form-control" />
+                                <span asp-validation-for="Guarantee" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="DateUse" class="control-label"></label>
+                                <input asp-for="DateUse" required class="form-control" />
+                                <span asp-validation-for="DateUse" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label asp-for="Amount" class="control-label"></label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row  pt-2">
+                            <div class="col-lg-4">
+                                <label asp-for="Reason" class="control-label"></label>
+                                <input asp-for="Reason" class="form-control" />
+                                <span asp-validation-for="Reason" class="text-danger"></span>
+                            </div>
+                            <div class="col-8">
+                                <label asp-for="Address" class="control-label"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <input type="hidden" name="Code" value="@Model.Code" />
+                    <h4>Chi tiết tài sản</h4>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label class="control-label">Nhà sản xuất <span class="text-danger">*</span></label>
+                            <select asp-for="Manufacturer" name="Manufacturer" class="form-control">
+                                <option selected value="">--Chọn--</option>
+                                @{
+                                    var listmanufacturer = ViewData["Manufacturer"] as List<Manufacturer>;
+                                }
+                                @if (listmanufacturer != null)
+                                {
+                                    @foreach (var item in listmanufacturer)
+                                    {
+                                        @if (item != null)
+                                        {
+                                            @if (@Model.Manufacturer != null)
+                                            {
+                                                @if (Model.Manufacturer.Id.Equals(item.Id))
+                                                {
+                                                    <option selected value="@item.Id">@item.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.Name</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label class="control-label">Loại tài sản  <span class="text-danger">*</span></label>
+                            @{
+                                var type = ViewData["Type"] as AssetTypes;
+                            }
+                            @if (type != null)
+                            {
+                                <p class="form-control">@type.AssetTypeName</p>
+                                <input type="hidden" name="AssetType" value="@type.Id" />
+                            }
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label class="control-label">Nhóm tài sản  <span class="text-danger">*</span></label>
+                            <select id="AssetGroup" asp-for="Type" name="AssetGroup" class="form-control">
+                                <option selected value="">--Chọn--</option>
+                                @{
+                                    var listgroup = ViewData["AssetGroup"] as List<AssetGroups>;
+                                }
+                                @if (listgroup != null)
+                                {
+                                    @foreach (var item in listgroup)
+                                    {
+                                        if (item == Model.AssetGroups)
+                                        {
+                                            <option selected value="@item.Id">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-4">
+                                <label asp-for="TechnicalData" class="control-label"></label>
+                                <input asp-for="TechnicalData" class="form-control" />
+                                <span asp-validation-for="TechnicalData" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label class="control-label">Đơn vị tính  <span class="text-danger">*</span></label>
+                                <select asp-for="Unit" name="Unit" class="form-control">
+                                    <option value="">--Chọn--</option>
+                                    @{
+                                        var listunit = ViewData["Unit"] as List<Unit>;
+                                    }
+                                    @if (listunit != null)
+                                    {
+                                        @foreach (var item in listunit)
+                                        {
+                                            @if (item != null)
+                                            {
+                                                @if (@Model.Unit != null)
+                                                {
+                                                    @if (Model.Unit.Id.Equals(item.Id))
+                                                    {
+                                                        <option selected value="@item.Id">@item.UnitName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.UnitName</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.UnitName</option>
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="Status" class="control-label"></label>
+                                <select asp-for="Status" class="form-control">
+                                    <option value="GOOD">Tốt</option>
+                                    <option value="BAD">Hỏng</option>
+                                    <option value="MAINTENANCE">Bảo trì</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @if (type != null)
+                    {
+                        @if (type.AssetTypeCode.Contains("LTS-OTO") || type.AssetTypeCode.Contains("LTS-PT"))
+                        {
+                            <style>
+                                #vehicleForm {
+                                    display: block !important;
+                                }
+                            </style>
+                        }
+                        else
+                        {
+                            <style>
+                                #vehicleForm {
+                                    display: none !important;
+                                }
+                            </style>
+                        }
+                    }
+
+                    <hr />
+                    <div id="vehicleForm">
+                        <div class="row  pt-2">
+                            <div class="col-4">
+                                <label asp-for="SeatNumber" class="control-label"></label>
+                                <input id="SeatNumber" asp-for="SeatNumber" class="form-control" />
+                                <span asp-validation-for="SeatNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="VehiclePlate" class="control-label"></label>
+                                <input id="VehiclePlate" asp-for="VehiclePlate" class="form-control" />
+                                <span asp-validation-for="VehiclePlate" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="WeightHandle" class="control-label"></label>
+                                <input id="WeightHandle" asp-for="WeightHandle" class="form-control" />
+                                <span asp-validation-for="WeightHandle" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-4">
+                                <label asp-for="Wattage" class="control-label"></label>
+                                <input id="Wattage" asp-for="Wattage" class="form-control" />
+                                <span asp-validation-for="Wattage" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row pt-2">
+                        <div class="col-4">
+                            <label asp-for="BudgetSource" class="control-label"></label>
+                            <input id="BudgetSource" asp-for="BudgetSource" class="form-control" />
+                            <span asp-validation-for="BudgetSource" class="text-danger"></span>
+                        </div>
+                        <div class="col-4">
+                            <label asp-for="CareerSource" class="control-label"></label>
+                            <input id="CareerSource" asp-for="CareerSource" class="form-control" />
+                            <span asp-validation-for="CareerSource" class="text-danger"></span>
+                        </div>
+                        <div class="col-4">
+                            <label asp-for="AidSource" class="control-label"></label>
+                            <input id="AidSource" asp-for="AidSource" class="form-control" />
+                            <span asp-validation-for="AidSource" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row  pt-2">
+                        <div class="col-4">
+                            <label asp-for="AnotherSource" class="control-label"></label>
+                            <input id="AnotherSource" asp-for="AnotherSource" class="form-control" />
+                            <span asp-validation-for="AnotherSource" class="text-danger"></span>
+                        </div>
+                        <div class="col-4">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input id="Price" asp-for="Price" readonly class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label"></label>
+                        <input asp-for="Note" class="form-control" />
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                </form>
+                <hr />
+            </div>
+            <div class="modal-footer">
+                @if (!User.IsInRole("Thường"))
+                {
+                    <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                }
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+        @if (Model.AssetGroups != null)
+        {
+            <input type="hidden" id="checkGroup" value="@Model.AssetGroups.Id" />
+        }
+        else
+        {
+            <input type="hidden" id="checkGroup" value="" />
+        }
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#wareHouseID').val($('#wareHouse').val());
+        $('#wareHouseName').text($('#wareHouse option:selected').text());
+
+        $('#BudgetSource').on('keyup', function () { SumPrice();});
+        $('#CareerSource').on('keyup', function () { SumPrice(); });
+        $('#AidSource').on('keyup', function () { SumPrice(); });
+        $('#AnotherSource').on('keyup', function () { SumPrice(); });
+        function SumPrice() {
+            var value1 = parseFloat($('#BudgetSource').val());
+            var value2 = parseFloat($('#CareerSource').val());
+            var value3 = parseFloat($('#AidSource').val());
+            var value4 = parseFloat($('#AnotherSource').val());
+            $('#Price').val((value1 + value2 + value3 + value4));
+        }
+   
+});
+
+   
+</script>

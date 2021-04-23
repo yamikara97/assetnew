@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.AssetsViewModel>
+<table id="assetGroup" class="table table-striped table-bordered table-data">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th style="width: 6%" class="text-center"><input type="checkbox" id="checkall" /></th>
+            <th style="width:15%">Tên nhóm</th>
+            <th style="width:12%">Mã nhóm</th>
+            <th style="width:12%">Mã Loại</th>
+            <th style="width:17%">Thời gian trích khấu hao tối thiểu</th>
+            <th style="width:17%">Thời gian trích khấu hao tối đa</th>
+            <th style="width:15%">Tỉ lệ hao mòn</th>
+            <th style="width:12%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item != null)
+            {
+        <tr>
+            <td></td>
+            <td class="text-center"><input type="checkbox" class="checkitem" id="@item.AssetGroups.Id" /></td>
+            <td class="text-wrap">@item.AssetGroups.Name</td>
+            <td class="text-wrap">@item.AssetGroups.AssetGroupCode</td>
+            <td class="text-wrap">@item.AssetType.AssetTypeCode</td>
+            <td></td>
+            <td class="text-wrap">@item.AssetGroups.LifeTime</td>
+            <td class="text-wrap">@item.AssetGroups.AtrophyPercent</td>
+            <td class="text-wrap" class="text-center">
+                <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.AssetGroups.Id)">
+                    <span>Sửa</span>
+                </button>
+                <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.AssetGroups.Id)">
+                    <span>Xóa</span>
+                </button>
+            </td>
+
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>
+<noscript></noscript>

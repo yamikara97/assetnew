@@ -1,0 +1,29 @@
+﻿
+<div class="modal fade" id="delete-model" tabindex="-1" role="dialog" aria-labelledby="delete-model-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body form-horizontal">
+                <form asp-action="DeleteMulti" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-9 ml-auto mr-auto">
+                            <h5 class="text-center text-danger">Xác nhận xóa các mục được chọn</h5>
+                        </div>
+                    </div>
+                    <input type="hidden" name="valuedelete" id="valuedelete" value="" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Thoát</button>
+                <button type="button" class="btn btn-danger" data-save="modal" localize-content>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")
+<script>
+    $(document).ready(function () {
+        var value = $('#valueToChange').text();
+        $('#valuedelete').val(value);
+    });
+</script>

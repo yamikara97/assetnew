@@ -1,0 +1,40 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.WareHouseUsersViewModel>
+
+<table id="warehouse" class="table table-striped table-bordered  table-data">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên sổ</th>
+            <th>Địa chỉ</th>
+            <th>Ghi chú</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item != null)
+            {
+        <tr>
+            <td></td>
+            <td>@item.wareHouse.Name</td>
+            <td>@item.wareHouse.Address</td>
+            <td>
+                @item.wareHouse.WHStatus
+            </td>
+            <td class="text-center">
+                <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.wareHouse.Id)">
+                    <span>Sửa</span>
+                </button>
+                <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.wareHouse.Id)">
+                    <span>Xóa</span>
+                </button>
+            </td>
+
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>

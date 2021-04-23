@@ -1,0 +1,45 @@
+﻿@model VimaruAsset.Models.Unit
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-lg modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-0">
+                <form asp-action="Create">
+                    <div class=" col-12 ml-auto mr-auto container">
+                        <div class="row pl-2">
+                            <div class="col-6">
+                                <label asp-for="UnitName" class="control-label"></label>
+                                <input asp-for="UnitName" required class="form-control" />
+                                <span asp-validation-for="UnitName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row pl-2">
+                            <div class="col-12">
+                                <label asp-for="Note" class="control-label"></label>
+                                <textarea required asp-for="Note" class="form-control">@Model.Note</textarea>
+                                <span asp-validation-for="Note" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </form>
+                <hr />
+                <div class="container">
+                    @if (Model.UpdateBy != null)
+                    {
+                        <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                        <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                        <span class="font-weight-bold"> - Bởi: </span>
+                        <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>

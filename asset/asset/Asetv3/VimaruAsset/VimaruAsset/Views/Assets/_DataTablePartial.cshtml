@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.AssetsViewModel>
+<div class="table-responsive">
+    <table id="mywarehouse" class="table table-striped table-bordered nowrap mt-2 table-data">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th style="width: 16%" class="text-primary">Ngày thêm</th>
+                <th style="width: 15%" class="text-primary">Tên tài sản</th>
+                <th style="width: 12%" class="text-primary">Mã tài sản</th>
+                <th style="width: 12%" class="text-primary">Đặt tại</th>
+                <th style="width: 15%" class="text-primary">Tổng nguyên giá</th>
+                <th style="width: 15%" class="text-primary">Loại tài sản</th>
+                    <th style="width: 16%" class="text-primary"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                if (item != null)
+                {
+            <tr>
+                <td></td>
+                <td class="font-weight-bold text-wrap">@item.Asset.DateUpdate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td class="font-weight-bold text-wrap">@item.Asset.Name</td>
+                <td class="font-weight-bold">@(item.Asset.Code == null ? "" : item.Asset.Code)   </td>
+                <td class="font-weight-bold">
+                    <span>@(item.Department == null ? "" : item.Department.Name) </span>
+                </td>
+                <td class="font-weight-bold">
+                    @if (@item.Asset != null)
+                    {
+                        @item.Asset.Price.ToString("##,##0");
+                    }
+                    VNĐ
+                </td>
+                <td class="font-weight-bold">@item.AssetType.AssetTypeName  </td>
+                @if (!User.IsInRole("Thường"))
+                {
+                    <td class="text-center">
+                        <button class="btn btn-secondary action-btn  border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("ChangeWarehouse") + "/" + item.Asset.Id)">
+                            <span><i class="fas fa-exchange-alt"></i></span>
+                        </button>
+                        <button class="btn btn-primary action-btn  border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Asset.Id)">
+                            <span><i class="fas fa-search-plus"></i></span>
+                        </button>
+                        <button class="btn btn-danger action-btn  border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.Asset.Id)">
+                            <span><i class="fas fa-trash"></i></span>
+                        </button>
+                    </td>
+                }
+                else
+                {
+                    <td class="text-center">
+                        <button class="btn btn-primary action-btn  border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Asset.Id)">
+                            <span><i class="fas fa-search-plus"></i></span>
+                        </button>
+                    </td>
+                }
+            </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,319 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{ 
+    Privacy pv = new Privacy();
+    string change = pv.DateEnd2.ToString("dd/MM/yyyy");
+}
+<style>
+    .warning {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        height: 50px;
+        border: 1px solid white;
+        border-top-left-radius: 10px;
+        z-index: 500000;
+        border-top-right-radius: 10px;
+    }
+</style>
+<div class="warning bg-danger text-center font-weight-bold text-white">
+    <p class="d-inline">Trang dùng thử sẽ hết hạn vào 30/05/2021</p>
+</div>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="navbar-bg"></div>
+    <nav class="navbar navbar-expand-lg main-navbar">
+
+        <form class="form-inline mr-auto">
+            <ul class="navbar-nav mr-3">
+                <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+            </ul>
+            @*<div class="search-element">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </div>*@
+        </form>
+        <ul class="navbar-nav navbar-right">
+            @*<li class="dropdown dropdown-list-toggle">
+                    <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                        <div class="dropdown-header">
+                            Messages
+                            <div class="float-right">
+                                <a href="#">Mark All As Read</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-list-content dropdown-list-message">
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle">
+                                    <div class="is-online"></div>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Kusnaedi</b>
+                                    <p>Hello, Bro!</p>
+                                    <div class="time">10 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="../assets/img/avatar/avatar-2.png" class="rounded-circle">
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Dedik Sugiharto</b>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                                    <div class="time">12 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="../assets/img/avatar/avatar-3.png" class="rounded-circle">
+                                    <div class="is-online"></div>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Agung Ardiansyah</b>
+                                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <div class="time">12 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="../assets/img/avatar/avatar-4.png" class="rounded-circle">
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Ardian Rahardiansyah</b>
+                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
+                                    <div class="time">16 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle">
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Alfa Zulkarnain</b>
+                                    <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+                                    <div class="time">Yesterday</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="dropdown-footer text-center">
+                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </li>*@
+            @*<li class="dropdown dropdown-list-toggle">
+                    <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                        <div class="dropdown-header">
+                            Notifications
+                            <div class="float-right">
+                                <a href="#">Mark All As Read</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-list-content dropdown-list-icons">
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-icon bg-primary text-white">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    Template update is available now!
+                                    <div class="time text-primary">2 Min Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-icon bg-info text-white">
+                                    <i class="far fa-user"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>You</b> and <b>Dedik Sugiharto</b> are now friends
+                                    <div class="time">10 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-icon bg-success text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
+                                    <div class="time">12 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-icon bg-danger text-white">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    Low disk space. Let's clean it!
+                                    <div class="time">17 Hours Ago</div>
+                                </div>
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <div class="dropdown-item-icon bg-info text-white">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    Welcome to Stisla template!
+                                    <div class="time">Yesterday</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="dropdown-footer text-center">
+                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </li>*@
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <img alt="image" src="~/Image/logo_vimaru.jpg" class="rounded-circle mr-1">
+                    <div class="d-sm-none d-lg-inline-block">@User.Identity.Name</div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item has-icon" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <i class="far fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <form class="form-inline has-icon" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-link text-dark">Đăng xuất</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-brand">
+                <a asp-controller="Home" asp-action="Index">Vimaru</a>
+            </div>
+            <div class="sidebar-brand sidebar-brand-sm">
+                <a asp-controller="Home" asp-action="Index">VMU</a>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="menu-header">Chung</li>
+                <li class="nav-item item-single">
+                    <a asp-controller="Assets" asp-action="Index" class="nav-link"><i class="far fa-clipboard"></i><span>Danh sách tài sản</span></a>
+                </li>
+                @if (!User.IsInRole("Thường"))
+                {
+                    <li class="nav-item item-single">
+                        <a asp-controller="Departments" asp-action="Index" class="nav-link"><i class="far fa-building"></i><span>Đơn vị sử dụng</span></a>
+                    </li>
+                }
+
+                @*<li class="nav-item dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-calculator"></i> <span>Nhập số dư đầu kì</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="#">Đất</a></li>
+                <li><a class="nav-link" href="#">Nhà/ Công trình xây dựng</a></li>
+                <li><a class="nav-link" href="#">Vật kiến trúc</a></li>
+                <li><a class="nav-link" href="#">Ô tô</a></li>
+                <li><a class="nav-link" href="#">Phương tiện vận tải khác</a></li>
+                <li><a class="nav-link" href="#">Máy móc thiết bị</a></li>
+                <li><a class="nav-link" href="#">Cây lâu năm/ súc vật</a></li>
+                <li><a class="nav-link" href="#">T/s cố định hữu hình khác</a></li>
+                <li><a class="nav-link" href="#">T/s cố định vô hình</a></li>
+            </ul>
+        </li>*@
+                @if (!User.IsInRole("Thường"))
+                {
+                    <li class="menu-header">Thao tác</li>
+                    <li class="nav-item item-single">
+                        <a asp-controller="ShoppingPlans" asp-action="Index" class="nav-link"><i class="fas fa-cart-arrow-down"></i><span>Lập kế hoạch mua sắm</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-plus-square"></i> <span>Tăng mới tài sản</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" asp-controller="Land" asp-action="Index">Đất</a></li>
+                            <li><a class="nav-link" asp-controller="Building" asp-action="Index">Nhà/ Công trình xây dựng</a></li>
+                            <li><a class="nav-link" asp-controller="StructureItem" asp-action="Index">Vật kiến trúc</a></li>
+                            <li><a class="nav-link" asp-controller="Car" asp-action="Index">Ô tô</a></li>
+                            <li><a class="nav-link" asp-controller="Vehicle" asp-action="Index">Phương tiện vận tải khác</a></li>
+                            <li><a class="nav-link" asp-controller="Device" asp-action="Index">Máy móc thiết bị</a></li>
+                            <li><a class="nav-link" asp-controller="PlantAnimal" asp-action="Index">Cây lâu năm/ súc vật</a></li>
+                            <li><a class="nav-link" asp-controller="Another" asp-action="Index">T/s cố định hữu hình khác</a></li>
+                            <li><a class="nav-link" asp-controller="Invisible" asp-action="Index">T/s cố định vô hình</a></li>
+                            <li><a class="nav-link" asp-controller="Congcudungcu" asp-action="Index">Công cụ dụng cụ</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-minus-square"></i> <span>Giảm tài sản</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" asp-controller="Reduction" asp-action="Index">Chuyển giao</a></li>
+                            @*<li><a class="nav-link" asp-controller="SellAsset" asp-action="Index">Bán/Cho thuê tài sản</a></li>*@
+                            <li><a class="nav-link" asp-controller="ReductionHistories" asp-action="Index">Lịch sử giảm tài sản</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-header">Báo cáo</li>
+                    <li class="nav-item item-single">
+                        <a asp-controller="Kiemke" asp-action="Index" class="nav-link"><i class="far fa-address-card"></i><span>Kiểm kê tài sản</span></a>
+                    </li>
+                    <li class="menu-header">Danh mục</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item item-single">
+                            <a asp-controller="ApplicationUser" asp-action="Index" class="nav-link"><i class="far fa-address-card"></i><span>Người dùng</span></a>
+                        </li>
+                        <li class="nav-item item-single">
+                            <a asp-controller="WareHouses" asp-action="Index" class="nav-link"><i class="fas fa-book"></i><span>Sổ tài sản</span></a>
+                        </li>
+
+
+                        @*<li class="nav-item item-single">
+                    <a asp-controller="AssetTypes" asp-action="Index" class="nav-link"><i class="far fa-folder-open"></i><span>Loại tài sản</span></a>
+                </li>*@
+                        <li class="nav-item item-single">
+                            <a asp-controller="AssetGroups" asp-action="Index" class="nav-link"><i class="far fa-folder"></i><span>Nhóm tài sản</span></a>
+                        </li>
+                    }
+                    <li class="nav-item item-single">
+                        <a asp-controller="Manufacturers" asp-action="Index" class="nav-link"><i class="fas fa-city"></i><span>Nhà sản xuất</span></a>
+                    </li>
+                    <li class="nav-item item-single">
+                        <a asp-controller="Units" asp-action="Index" class="nav-link"><i class="fas fa-calculator"></i><span>Đơn vị tính</span></a>
+                    </li>
+
+                }
+
+            </ul>
+        </aside>
+    </div>
+
+
+}
+else
+{
+    <div class="navbar-bg"></div>
+    <nav class="navbar navbar-expand-lg main-navbar">
+        <ul class="navbar-nav navbar-left">
+            <li class="nav-item">
+                <a class="nav-link text-white font-weight-bolder" asp-controller="Home" asp-action="Index">
+                    Trang chủ
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline mr-auto">
+            <ul class="navbar-nav mr-3">
+            </ul>
+            @*<div class="search-element">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            </div>*@
+        </form>
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link text-white font-weight-bold" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+            </li>
+        </ul>
+    </nav>
+    <style>
+        .main-content {
+            padding-left: 3% !important;
+        }
+    </style>
+}

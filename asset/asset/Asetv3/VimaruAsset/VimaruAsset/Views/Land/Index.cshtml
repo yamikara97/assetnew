@@ -1,0 +1,89 @@
+﻿@model IEnumerable<VimaruAsset.Models.AssetsViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="section">
+    <div class="section-header">
+        <ul class="breadcrumb bg-white font-weight-bold" style="margin: unset !important">
+            <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a>Tăng mới</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a>Đất</a>
+            </li>
+        </ul>
+    </div>
+    <div class="section-body ">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <form class="col-7" asp-action="Index" method="post">
+                            <div id="search-box" class="row">
+                                <select id="wareHouse" class="form-control border-primary search-bar col-11" name="warehouse">
+                                    @{
+                                        var listWh = ViewData["MyWareHouse"] as List<WareHouse>;
+                                    }
+                                    @if (listWh != null)
+                                    {
+                                        @foreach (var item in listWh)
+                                        {
+                                            if (ViewBag.SelectID != null && ViewBag.SelectID == item.Id)
+                                            {
+                                                <option selected value="@item.Id">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <input type="hidden" id="idToSend" name="idToSend" value="" />
+                                <button class="btn search-bar-button btn-outline-info ml-1" id="searchBtn" data-url="@Url.Action("Index")"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                        <button class="btn btn-outline-info ml-1" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("ImportList"))"><i data-toggle="tooltip" class="fas fa-upload"></i></button>
+                        <button id="btnAdd" class="ml-auto mr-0 btn btn-outline-info col-2" data-toggle="ajax-modal" data-target="#order-model" data-url="@Url.Action("Create")">
+                            Thêm mới
+                            <i class="text-danger fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <h5>Lịch sử</h5>
+                @await Html.PartialAsync("_DataTablePartial.cshtml", Model)
+            </div>
+        </div>
+
+    </div>
+</section>
+<div id="modal-placeholder"></div>
+<div class="container">
+    <h1> @ViewBag.temp</h1>
+</div>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptInit", "mywarehouse");}
+
+}
+<script>
+    $(document).ready(function () {
+        var temp = sessionStorage.getItem("idToSend");
+        if (temp != "" && temp != null) {
+            $("#search-box select").val(temp)
+        }
+        $('#idToSend').val($('#wareHouse').val());
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    $('#wareHouse').on('change', function () {
+        $('#idToSend').val(this.value);
+        sessionStorage.setItem("idToSend", this.value);
+    });
+</script>

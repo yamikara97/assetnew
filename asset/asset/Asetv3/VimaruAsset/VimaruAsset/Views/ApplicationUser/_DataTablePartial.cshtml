@@ -1,0 +1,69 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.UserViewModel>
+<table id="users" class="table table-bordered table-striped table-data">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tài khoản</th>
+            <th>Tên</th>
+            <th>Phòng ban</th>
+            <th>Quyền</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item != null)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.user.Email</td>
+                    <td>@item.user.FullName</td>
+                    <td>
+                        @if (@item.department == null)
+                        {
+                            <span></span>
+                         }
+                        else
+                        {
+                            @item.department.Name
+                        }
+
+                    </td>
+                    <td>
+                        @if (@item.role == null)
+                        {
+                            <span></span>
+                        }
+                        else
+                        {
+                            @item.role.Name
+                        }
+                    </td>
+                    <td class="text-center">
+
+                        @if (@item.role == null || item.role.Name != "Admin")
+                        {
+                            <button class="btn btn-success action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("AddRole") + "/" + item.user.Id)">
+                                <span>Quyền</span>
+                            </button>
+                            <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.user.Id)">
+                                <span>Sửa</span>
+                            </button>
+                            <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("ResetPassword") + "/" + item.user.Id)">
+                                <span>Mật khẩu</span>
+                            </button>
+                            <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.user.Id)">
+                                <span>Xóa</span>
+                            </button>
+                        }
+
+                    </td>
+
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

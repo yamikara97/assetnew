@@ -1,0 +1,86 @@
+﻿@model VimaruAsset.Models.AssetGroups
+    <div class="modal fade p-0" id="order-modal ">
+        <div class="modal-lg modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body p-0">
+                    <form asp-action="Create">
+                        <div class="container">
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AssetGroupCode" class="control-label"></label>
+                                <input asp-for="AssetGroupCode" class="form-control" />
+                                <span asp-validation-for="AssetGroupCode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LifeTimeMin" class="control-label"></label>
+                                <input asp-for="LifeTimeMin" class="form-control" />
+                                <span asp-validation-for="LifeTimeMin" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LifeTime" class="control-label"></label>
+                                <input asp-for="LifeTime" class="form-control" />
+                                <span asp-validation-for="LifeTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AtrophyPercent" class="control-label"></label>
+                                <input asp-for="AtrophyPercent" class="form-control" />
+                                <span asp-validation-for="AtrophyPercent" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                @{
+                                    List<AssetTypes> ListTypes = ViewData["ListType"] as List<AssetTypes>;
+                                }
+                                <label asp-for="AssetType" class="control-label"></label>
+                                <select class="form-control" name="assetType">
+                                    @foreach (var item in ListTypes)
+                                    {
+                                        if (item != null)
+                                        {
+                                            if (Model.AssetType != null)
+                                            {
+                                                @if (Model.AssetType.Equals(item))
+                                                {
+                                                    <option selected value="@item.Id">@item.AssetTypeName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.AssetTypeName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.AssetTypeName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="AssetType" class="text-danger"></span>
+                            </div>
+                        </div>
+                      
+                    </form>   
+                    <hr />
+                    <div class="container">
+                        @if(Model.UpdateBy != null)
+                        {
+                            <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                            <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                            <span class="font-weight-bold"> - Bởi: </span>
+                            <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,141 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.Department>
+<table id="department" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Cây quản lý hệ thống</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @{
+                    bool check(Department dep)
+                    {
+                        foreach(var item in Model)
+                        {
+                            if (item.FatherID == dep.FatherID)
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+
+
+                    var List = Model;
+                    var ListLeft = Model;
+                    void createtree(string fatherID, IEnumerable<Department> list)
+                    {
+
+                        if (fatherID == "")
+                        {
+                            @foreach (var item in list)
+                            {
+                                if (item.FatherID == "" || item.FatherID == null)
+                                {
+
+                                    <li class="active">
+                                        <span class="@(list.Where(a => a.FatherID == item.Code).ToList().Count() > 0 ? "caret caret-down" : "") ">
+                                            @item.Name
+                                            <button class="btn btn-nest ml-lg-2" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "?Code=" + item.Code)"><i class="fas fa-plus"></i></button>
+                                            <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Delete") + "/" + item.Id)"><i class="fas fa-trash"></i></button>
+                                        </span>
+                                        <ul class="nested active">
+                                            @{list = list.Where(a => a.Code != item.Code);
+                                                ListLeft = list;}
+
+                                            @{
+                                                createtree(item.Code, list);
+                                            }
+
+                                        </ul>
+                                    </li>
+
+                                }
+                              }
+                        }
+                        else
+                        {
+                            @foreach (var item in list)
+                            {
+                                if (item.FatherID == fatherID)
+                                {
+                                    <li>
+                                        <span class="@(list.Where(a => a.FatherID == item.Code).ToList().Count() > 0 ? "caret  caret-down" : "") active">
+                                            @item.Name
+                                            <button class="btn btn-nest ml-lg-2" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "?Code=" + item.Code)"><i class="fas fa-plus"></i></button>
+                                            <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Delete") + "/" + item.Id)"><i class="fas fa-trash"></i></button>
+                                        </span>
+                                                <ul class="nested active">
+                                                    @{list = list.Where(a => a.Code != item.Code);
+                                                        ListLeft = list;}
+                                                    @{
+                                                        createtree(item.Code, list);
+                                                    }
+                                                </ul>
+                                      </li>
+                                    }
+                                }
+                                }
+                            }
+                        }
+
+            <ul id="myUL">
+
+                @{
+                    createtree("", List);
+                }
+                @foreach (var item in Model)
+                {
+                    if (!check(item))
+                    {
+                        <li>
+                            <span class="">
+                                @item.Name
+                                <button class="btn btn-nest ml-lg-2" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "?Code=" + item.Code)"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Delete") + "/" + item.Id)"><i class="fas fa-trash"></i></button>
+                            </span>
+                        </li>
+                    }
+                    if (item.FatherID == item.Code)
+                    {
+                        <li>
+                            <span class="">
+                                @item.Name
+                                <button class="btn btn-nest ml-lg-2" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "?Code=" + item.Code)"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-nest " data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Delete") + "/" + item.Id)"><i class="fas fa-trash"></i></button>
+                            </span>
+                        </li>
+                    }
+                }
+            </ul>
+            </td>
+        </tr>
+        @*@foreach (var item in Model)
+        {
+            if (item != null)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Code</td>
+                    <td>@item.Note</td>
+                    <td class="text-center">
+                        <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)">
+                            <span>Sửa</span>
+                        </button>
+                        <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.Id)">
+                            <span>Xóa</span>
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        }*@
+
+    </tbody>
+</table>

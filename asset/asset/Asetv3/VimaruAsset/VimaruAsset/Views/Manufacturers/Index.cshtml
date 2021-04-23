@@ -1,0 +1,48 @@
+﻿@model IEnumerable<VimaruAsset.Models.Manufacturer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="section">
+    <div class="section-header">
+        <ul class="breadcrumb bg-white font-weight-bold" style="margin: unset !important">
+            <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a>Nhà cung cấp</a>
+            </li>
+        </ul>
+    </div>
+    <div class="section-body ">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <button class="ml-auto btn btn-outline-info col-2 mr-0 " data-toggle="ajax-modal" data-target="#order-model" data-url="@Url.Action("Create")">
+                            Thêm mới
+                            <i class="text-danger fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="container" p>
+
+                </div>
+                @await Html.PartialAsync("_DataTablePartial.cshtml", Model)
+            </div>
+        </div>
+
+    </div>
+</section>
+<div id="modal-placeholder"></div>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptInit", "manufacturer");}
+}
+
+
+

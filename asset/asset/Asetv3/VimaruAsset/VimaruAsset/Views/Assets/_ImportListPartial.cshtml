@@ -1,0 +1,41 @@
+﻿<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Tải lên tệp chứa danh sách tài sản  </h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="ImportList">
+                    <input id="wareHouseId" type="hidden" name="wareHouseId" value="" />
+                    <div class=" container">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <input id="file" type="file" name="file" class="custom-file-input border-primary">
+                                <label class="custom-file-label" for="customFile">Tải lên tệp</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="https://bom.to/l83TZU" class="text-danger ml-3 mt-3">Tải xuống tệp mẫu</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                @*<input type="button" id="btnUpload" value="Upload Excel" class="btn btn-success" />*@
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    $(document).ready(function () {
+        $('#wareHouseId').val($('#wareHouse').val());
+    });
+</script>

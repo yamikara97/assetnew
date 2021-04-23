@@ -1,0 +1,58 @@
+﻿@model VimaruAsset.Models.ApplicationUser
+    <div class="modal fade p-0" id="order-modal ">
+        <div class="modal-lg modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body container">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="FullName" class="control-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Số điện thoại</label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @{
+                                var departments = ViewData["Department"] as List<Department>;
+                            }
+                            <label>Chọn bộ phận </label>
+                            <select name="Department" class="form-control">
+                                @foreach (var item in departments)
+                                {
+                                    @if (Model.Department != null)
+                                    {
+                                        if (item != null && item.Id.Equals(Model.Department.Id))
+                                        {
+                                            <option value="@item.Id" selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </form>
+                    <hr />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>

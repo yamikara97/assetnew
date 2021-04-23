@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<VimaruAsset.Models.AssetsViewModel>
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <section class="section">
+        <div class="section-header">
+            <div class="text-center ml-auto mr-auto">
+                <h1 class="display-4">Trang quản lý tài sản Đại học Hàng hải Việt Nam</h1>
+            </div>
+        </div>
+        <div class="row">
+            <img class="col-3 ml-auto mr-auto" src="~/Image/logo_vimaru.png" />
+
+        </div>
+
+        @*@{
+                var dat = Model.Where(a => a.AssetType.AssetTypeName.Contains("Đất")).ToList();
+                var nhacongtrinh = Model.Where(a => a.AssetType.AssetTypeName.Contains("Nhà/ Công trình xây dựng")).ToList();
+                var vatkientruc = Model.Where(a => a.AssetType.AssetTypeName.Contains("Vật kiến trúc")).ToList();
+                var oto = Model.Where(a => a.AssetType.AssetTypeName.Contains("Ô tô")).ToList();
+                var phuongtien = Model.Where(a => a.AssetType.AssetTypeName.Contains("Phương tiện")).ToList();
+                var maymoc = Model.Where(a => a.AssetType.AssetTypeName.Contains("Máy móc")).ToList();
+                var caysuc = Model.Where(a => a.AssetType.AssetTypeName.Contains("Cây lâu năm súc vật")).ToList();
+                var khac = Model.Where(a => a.AssetType.AssetTypeName.Contains("khác")).ToList();
+                var vohinh = Model.Where(a => a.AssetType.AssetTypeName.Contains("vô hình")).ToList();
+                var congcu = Model.Where(a => a.AssetType.AssetTypeName.Contains("Công cụ")).ToList();
+                var moneydat = dat == null ? 0 : dat.Sum(a => a.Asset.Price);
+            }
+
+            <div class="section-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Tên loại tài sản</th>
+                                                <th>Tổng nguyên giá</th>
+                                                <th>Tỷ lệ %</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Đất</td>
+                                                <td>@moneydat</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <img src="~/Image/logo_vimaru.png" style="display:inline-block;position:absolute; width:100%;" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+    </section>
+
+}
+else
+{
+    <div class="row">
+        <img class="col-3 mt-5 ml-auto mr-auto" src="~/Image/logo_vimaru.png" />
+
+    </div>
+    @*<link href="~/lib/chartjs/Chart.css" rel="stylesheet" />
+        <script src="~/lib/chartjs/Chart.js"></script>
+        <section class="section">
+            <div class="section-header">
+                <div class="text-center ml-auto mr-auto">
+                    <h1 class="display-4">Biểu đồ tài sản quản trị</h1>
+                </div>
+            </div>
+            @{
+
+            }
+            <div class="section-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 ml-auto mr-auto">
+                            <canvas id="oilChart" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script>
+            var oilCanvas = document.getElementById("oilChart");
+
+            Chart.defaults.global.defaultFontFamily = "Lato";
+            Chart.defaults.global.defaultFontSize = 18;
+
+            var oilData = {
+                labels: [
+                    "Saudi Arabia",
+                    "Russia",
+                    "Iraq",
+                    "United Arab Emirates",
+                    "Canada"
+                ],
+                datasets: [
+                    {
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#63FF84",
+                            "#84FF63",
+                            "#8463FF",
+                            "#6384FF"
+                        ]
+                    }]
+            };
+
+            var pieChart = new Chart(oilCanvas, {
+                type: 'pie',
+                data: oilData
+            });
+        </script>*@
+}

@@ -1,0 +1,295 @@
+﻿@model VimaruAsset.Models.ShoppingPlan
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-xl modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-primary">Thêm kế hoạch mua sắm</h4>
+            </div>
+            <div class="modal-body p-0">
+                <form asp-action="Create">
+                    <div class=" col-12 ml-auto mr-auto container">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label font-weight-bold"></label>
+                                    <input asp-for="Name" class="form-control" required />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label asp-for="Phongban" class="control-label font-weight-bold"></label>
+                                    <select class="form-control" name="Phongban">
+                                        <option value="">----------Chọn-------</option>
+                                        @{
+                                            var ListPhongBan = ViewData["ListDepartment"] as List<Department>;
+                                        }
+                                        @if (ListPhongBan != null && ListPhongBan.Count > 0)
+                                        {
+                                            foreach (var item in ListPhongBan)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    if (Model.Phongban != null)
+                                                    {
+                                                        if (Model.Phongban == item.Id)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    </select>
+                                    <span asp-validation-for="Year" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label asp-for="Year" class="control-label font-weight-bold"></label>
+                                    <input asp-for="Year" class="form-control" />
+                                    <span asp-validation-for="Year" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Content" class="control-label font-weight-bold"></label>
+                            <input asp-for="Content" class="form-control" />
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="container">
+
+                        <div class="table-responsive text-nowrap">
+                            <table id="assets-table" class="table  table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Tên tài sản</th>
+                                        <th>Loại tài sản</th>
+                                        <th>Phương thức hình thành</th>
+                                        <th>Đơn vị tính</th>
+                                        <th>Mô tả</th>
+                                        <th>Thời gian dự kiến</th>
+                                        <th>Số lượng dự kiến</th>
+                                        <th>Đơn giá dự kiến</th>
+                                        <th>Hình thức mua sắm </th>
+                                        <th>Dự toán ĐD</th>
+                                        <th>Ghi chú</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablecontent">
+                                    @{
+                                        
+                                        List<Unit> listUnit = ViewData["Unit"] as List<Unit>;
+                                        List<AssetTypes> listType = ViewData["AssetType"] as List<AssetTypes>;
+                                        List<AssetPlantViewmodel> listAsset = ViewData["ListAsset"] as List<AssetPlantViewmodel>;
+                                    }
+                                    @if (listAsset != null)
+                                    {
+                                        @foreach (var asset in listAsset)
+                                        {
+                                            @if (asset != null)
+                                            {
+                                    <tr>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="na" value="@asset.PlanAssets.Name" /></td>
+                                        <td>
+                                            <select class="border-0 ip-item" name="ty" style="outline: none">
+                                                @foreach (var item in listType)
+                                                {
+                                                    if (item.Id == asset.AssetTypes.Id)
+                                                    {
+                                                        <option selected value="@item.Id">@item.AssetTypeName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.AssetTypeName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="pt" value="@asset.PlanAssets.Method" /></td>
+                                        <td>
+                                            <select class="border-0 ip-item" name="dv" style="outline: none">
+                                                @foreach (var item in listUnit)
+                                                {
+                                                    if (item.Id == asset.Unit.Id)
+                                                    {
+                                                        <option selected value="@item.Id">@item.UnitName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.UnitName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="mt" value="@asset.PlanAssets.Describe" /></td>
+                                        <td><input class="border-0 ip-item" asp-for="@asset.PlanAssets.TimeExpected" style="outline: none" type="date" width="100" name="tg" /></td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="sl" value="@asset.PlanAssets.AmountExpected" /></td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="dg" value="@asset.PlanAssets.PriceExpected" /></td>
+                                        <td>
+                                            <select class="border-0 ip-item" name="ht" style="outline: none">
+                                                @if (asset.PlanAssets.BuyingMethod == @PlanAssets.BuyingMethods.Chaohang)
+                                                {
+                                                    <option selected value="@PlanAssets.BuyingMethods.Chaohang">Chào Hàng</option>
+}
+                                                else
+                                                {
+                                                    <option selected value="@PlanAssets.BuyingMethods.Chaohang">Chào Hàng</option>
+} }
+
+                                                @if (asset.PlanAssets.BuyingMethod == @PlanAssets.BuyingMethods.Dauthau)
+                                                {
+                                                    <option selected value="@PlanAssets.BuyingMethods.Dauthau">Đấu Thầu</option>
+}
+                                                else
+                                                {
+                                                    <option value="@PlanAssets.BuyingMethods.Dauthau">Đấu Thầu</option>
+}
+
+                                                @if (asset.PlanAssets.BuyingMethod == @PlanAssets.BuyingMethods.Chidinhthau)
+                                                {
+                                                    <option selected value="@PlanAssets.BuyingMethods.Chidinhthau">Chỉ định thầu</option>
+ }
+                                                else
+                                                {
+                                                    <option value="@PlanAssets.BuyingMethods.Chidinhthau">Chỉ định thầu</option>
+}
+
+                                                @if (asset.PlanAssets.BuyingMethod == @PlanAssets.BuyingMethods.Muasamtructiep)
+                                                {
+                                                    <option selected value="@PlanAssets.BuyingMethods.Muasamtructiep">Mua sắm trực tiếp</option>
+ }
+                                                else
+                                                {
+                                                    <option value="@PlanAssets.BuyingMethods.Muasamtructiep">Mua sắm trực tiếp</option>
+}
+                                            </select>
+                                        </td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="dt" value="@asset.PlanAssets.Estimate" /></td>
+                                        <td><input class="border-0 ip-item" style="outline: none" type="text" width="100" name="gc" value="@asset.PlanAssets.Note" /></td>
+                                        <td> <a onclick="deletecur(this)" class="btn btn-danger text-white mb-2"><i class="fas fa-minus"></i></a></td>
+                                    </tr>
+
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                            <div class="row mt-2">
+                                <div class="col-2">
+                                    <div class="row">
+                                        <div class="col-3 text-center">
+                                            <button id="add-row-btn" class="btn btn-primary mb-2"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input id="countingValue" type="hidden" name="countingValue" value="@listAsset.Count" />
+                </form>
+                <hr />
+                <div class="container">
+                    @if (Model.UpdateBy != null)
+                    {
+                        <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                        <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                        <span class="font-weight-bold"> - Bởi: </span>
+                        <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function refreshIndex() {
+        $('.ip-item').each(function () {
+            var newname = this.getAttribute('name').slice(0, 2) + this.parentNode.parentNode.rowIndex;
+            this.setAttribute("name", newname);
+        });
+    }
+    $(document).ready(function () {
+        refreshIndex();
+    });
+    $('#add-row-btn').on('click', function (e) {
+        e.preventDefault();
+        var cur = document.getElementById('tablecontent').rows.length + 1;
+        $('#countingValue').val(cur);
+        $.ajax({
+            url: '@Url.Content("~/")' + "ShoppingPlans/getRowInfo",
+            type: 'GET',
+            dataType: 'json',
+            success: function (data1) {
+                var typeToAppend = "";
+                var unitToAppend = "";
+                var count;
+                for (count = 0; count < data1.listA.length; count++) {
+                    typeToAppend += '<option value="' + data1.listA[count]["id"] + '">' + data1.listA[count]["assetTypeName"] + '</option>';
+                }
+                for (count = 0; count < data1.listU.length; count++) {
+                    unitToAppend += '<option value="' + data1.listU[count]["id"] + '">' + data1.listU[count]["unitName"] + '</option>';
+                }
+                $('#tablecontent').append('<tr>' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="na' + cur + '" value="" /></td>' +
+                    '<td>' +
+                    '<select class="border-0 ip-item" name="ty' + cur + '" style="outline: none">' +
+                    typeToAppend +
+                    '+select>' +
+                    '</td>' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="pt' + cur + '" value="" /></td> ' +
+                    '<td>' +
+                    '<select class="border-0 ip-item" name="dv' + cur + '" style="outline: none">' +
+                    unitToAppend +
+                    '+select>' +
+                    '</td>' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="mt' + cur + '" value="" /></td> ' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="date" width="100" name="tg' + cur + '" value="" /></td> ' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="sl' + cur + '" value="" /></td> ' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="dg' + cur + '" value="" /></td> ' +
+                    '<td>' +
+                    '<select class="border-0 ip-item" name="ht' + cur + '" style="outline: none">' +
+                        '<option selected value="@PlanAssets.BuyingMethods.Chaohang">Chào Hàng</option>' +
+                        '<option selected value="@PlanAssets.BuyingMethods.Chidinhthau">Chỉ định thầu</option>'+
+                        '<option selected value="@PlanAssets.BuyingMethods.Dauthau">Đấu Thầu</option>' +
+                        '<option selected value="@PlanAssets.BuyingMethods.Muasamtructiep">Mua sắm trực tiếp</option>'+
+                    '+select>' +
+                    '</td>' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="dt' + cur + '" value="" /></td> ' +
+                    '<td> <input class="border-0 ip-item" style="outline: none" type="text" width="100" name="gc' + cur + '" value="" /></td> ' +
+                    '<td> <a onclick="deletecur(this)" class="btn btn-danger text-white mb-2"><i class="fas fa-minus"></i></a></td> ' +
+                    '</tr >');
+            }
+        });
+    });
+    var currow;
+    function deletecur(o) {
+        var p = o.parentNode.parentNode;
+        p.parentNode.removeChild(p);
+        refreshIndex();
+        var cur = document.getElementById('tablecontent').rows.length;
+        $('#countingValue').val(cur);
+    }
+
+</script>

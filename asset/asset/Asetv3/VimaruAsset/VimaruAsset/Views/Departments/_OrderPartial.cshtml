@@ -1,0 +1,85 @@
+﻿@model VimaruAsset.Models.Department
+    <div class="modal fade p-0" id="order-modal ">
+        <div class="modal-lg modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body p-0">
+                    <form asp-action="Create">
+                        <div class=" col-12 ml-auto mr-auto container">
+                            <div class="row pl-2">
+                                <div class="col-12">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input id="DepartmentName" asp-for="Name" required class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="oldCode" value="@(Model.Code == null ? "" : Model.Code)" />
+                            @if (Model.Id != Guid.Empty)
+                            {
+                                <div class="row pl-2">
+                                    <div class="col-12">
+                                        <label asp-for="Code" class="control-label"></label>
+                                        <input id="DepartmentCode" readonly asp-for="Code"  class="form-control" />
+                                        <span asp-validation-for="Code" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row pl-2">
+                                    <div class="col-12">
+                                        <label asp-for="Code" class="control-label text-danger"> Mã phòng ban tự sinh sau khi tạo</label>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row pl-2 mt-2">
+                                <div class="col-12">
+                                    <label asp-for="Note" class="control-label"></label>
+                                    <input asp-for="Note" required class="form-control" />
+                                    <span asp-validation-for="Note" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pl-2 mt-2">
+                                <div class="col-12">
+                                    <label asp-for="ManagerName" class="control-label"></label>
+                                    <input asp-for="ManagerName" required class="form-control" />
+                                    <span asp-validation-for="ManagerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pl-2 mt-2">
+                                <div class="col-12">
+                                    <label class="control-label">Mã vị trí quản lý cha</label>
+                                    @if (ViewBag.Father != "")
+                                    {
+                                        <input readonly id="fatherid" asp-for="FatherID" required class="form-control" value="@ViewBag.Father" />
+                                    }
+                                    else
+                                    {
+                                        <input id="fatherid" asp-for="FatherID" required class="form-control" value="@Model.FatherID" />
+                                    }
+                                    <span asp-validation-for="ManagerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>   
+                    <hr />
+                    <div class="container">
+                        @if (Model.UpdateBy != null)
+                        {
+                            <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                            <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                            <span class="font-weight-bold"> - Bởi: </span>
+                            <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>

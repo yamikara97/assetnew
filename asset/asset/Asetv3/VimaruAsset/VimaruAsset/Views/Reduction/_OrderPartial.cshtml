@@ -1,0 +1,104 @@
+﻿@model VimaruAsset.Models.Assets
+
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-xl modal-dialog ">
+        <div class="modal-content container">
+            <div class="modal-body container">
+                <div class="row">
+                    <h5 class="col-12 text-primary">Chuyển giao tài sản</h5>
+                    <h6 class="col-12 text-danger">Toàn bộ tài sản bạn đã chọn</h6>
+                </div>
+                <hr />
+                <form asp-action="Create">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="control-label">Tới phòng ban <span class="text-danger">*</span></label>
+                                    <select id="Department" name="Department" class="form-control">
+                                        <option value="">------Chọn-----</option>
+                                        @{
+                                            var listPB = ViewData["ListDepartment"] as List<Department>;
+                                        }
+                                        @if (listPB != null && listPB.Count > 0)
+                                        {
+                                            foreach (var item in listPB)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="control-label">Chọn sổ <span class="text-danger">*</span></label>
+                                    <select id="AssetBook" name="AssetBook" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <label class="control-label">Lý do/ Ghi chú</label>
+                                <textarea class="form-control" name="Reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="wareHouseID" id="wareHouseID" value="" />
+                    <input type="hidden" id="valueReturn" name="valueReturn" value="" />
+                </form>
+                <hr />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#wareHouseID').val($('#wareHouse').val()); 
+        var value = $('#valueToChange').text();
+        $('#valueReturn').val(value);
+    });
+    $('#Department').on('change', function () {
+        GetGroups2(this.value);
+    });
+
+
+    function GetGroups2(idToSend) {
+         var target = document.getElementById("AssetBook");
+        $.ajax({
+            url: '@Url.Content("~/")' + "Reduction/GetBook",
+            type: 'POST',
+            data: {
+                IdToSearch: idToSend
+            },
+            dataType: 'json',
+            success: function (data1) {
+                var count;
+                removeOptions(document.getElementById("AssetBook"));
+                for (count = 0; count < data1.length; count++) {
+                    var option = document.createElement("option");
+                    option.text = data1[count].name;
+                    option.value = data1[count].id;
+                    target.add(option);
+                }
+            }
+        });
+    }
+
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+        var option = document.createElement("option");
+        option.text = "-----Chọn-----";
+        option.value = "";
+        selectElement.add(option);
+    }
+</script>

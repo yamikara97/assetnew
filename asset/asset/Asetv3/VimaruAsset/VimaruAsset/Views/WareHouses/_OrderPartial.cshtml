@@ -1,0 +1,76 @@
+﻿@model VimaruAsset.Models.WareHouse
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-lg modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-0">
+                <form asp-action="Create" class="container">
+                    <div><input type="hidden" asp-for="Id" /></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @{
+                            var listUser = ViewData["Users"] as List<Department>;
+                        }
+                        <label class="control-label">Thuộc về</label>
+
+                        <select class="form-control" name="userSelected">
+
+                            @foreach (var item in listUser)
+                            {
+                                @if (Model.department != null)
+                                {
+
+                                    @if (item.Id.Equals(Model.department.Id))
+                                    {
+                                        <option selected value="@item.Id">@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WHStatus" class="control-label"></label>
+                        <input asp-for="WHStatus" class="form-control" />
+                        <span asp-validation-for="WHStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>  
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </form>
+                <hr />
+                <div class="container">
+                    @if (Model.UpdateBy != null)
+                    {
+                        <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                        <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                        <span class="font-weight-bold"> - Bởi: </span>
+                        <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>

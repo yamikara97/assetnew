@@ -1,0 +1,52 @@
+﻿@model VimaruAsset.Models.AssetTypes
+    <div class="modal fade p-0" id="order-modal ">
+        <div class="modal-lg modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body p-0">
+                    <form asp-action="Create">
+                        <div class=" col-12 ml-auto mr-auto container">
+                            <div class="row pl-2">
+                                <div class="col-12">
+                                    <label asp-for="AssetTypeName" class="control-label"></label>
+                                    <input asp-for="AssetTypeName" required class="form-control" />
+                                    <span asp-validation-for="AssetTypeName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pl-2">
+                                <div class="col-12">
+                                    <label asp-for="AssetTypeCode" class="control-label"></label>
+                                    <input asp-for="AssetTypeCode" required class="form-control" />
+                                    <span asp-validation-for="AssetTypeCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pl-2">
+                                <div class="col-12">
+                                    <label asp-for="Detail" class="control-label"></label>
+                                    <textarea required asp-for="Detail" class="form-control">@Model.Detail</textarea>
+                                    <span asp-validation-for="Detail" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>   
+                    <hr />
+                    <div class="container">
+                        @if(Model.UpdateBy != null)
+                        {
+                            <span class="font-weight-bold">Cập nhật lần cuối vào: </span>
+                            <span class="font-weight-bold text-info">@Model.DateUpdate.ToString("dd-MM-yyyy HH:mm")</span>
+                            <span class="font-weight-bold"> - Bởi: </span>
+                            <span class="font-weight-bold text-danger">@Model.UpdateBy</span>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,47 @@
+﻿@model VimaruAsset.Models.Assets
+<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-lg modal-dialog ">
+        <div class="modal-content container">
+            <div class="modal-body container">
+                <div class="row">
+                    <h5 class="col-3 text-primary">Chuyển kho</h5>
+                    <h5 id="wareHouseName" class="col-7 mr-0 ml-auto text-primary text-right"></h5>
+                </div>
+                <hr />
+                <form asp-action="ChangeWarehouse">
+                    <div class="container">
+                        <input type="hidden" name="AssetId" value="@Model.Id" />
+                        <div class="form-group">
+                            <label class="control-label">Chọn sổ để chuyển tới</label>
+                            @{ 
+                                var listWh = ViewData["listWareHouse"] as List<WareHouse>;
+                            }
+                            <select class="form-control" name="WareHouse">
+                                @if (listWh != null)
+                                {
+                                    @foreach (var item in listWh)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                                }
+                            </select> 
+                            <span asp-validation-for="MFG" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#wareHouseID').val($('#wareHouse').val());
+        $('#wareHouseName').text($('#wareHouse option:selected').text());
+                            });
+</script>

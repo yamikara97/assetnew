@@ -1,0 +1,35 @@
+﻿<div class="modal fade p-0" id="order-modal ">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Tải lên tệp chứa danh sách nhóm tài sản </h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="ImportList">
+                    <input id="wareHouseId" type="hidden" name="wareHouseId" value="" />
+                    <div class=" container">
+                        <div class="row">
+                            <div class="col-12">
+                                <input id="file2" type="file" name="file" class="custom-file-input border-primary">
+                                <label class="custom-file-label" for="customFile">Tải lên tệp</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a target="_blank" rel="noopener noreferrer" href="Departments/Getfile" class="text-danger ml-3 mt-3">Tải xuống tệp mẫu</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">Lưu</button>
+                @*<input type="button" id="btnUpload" value="Upload Excel" class="btn btn-success" />*@
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('change', '.custom-file-input', function (event) {
+    $(this).next('.custom-file-label').html(event.target.files[0].name);
+})
+</script>

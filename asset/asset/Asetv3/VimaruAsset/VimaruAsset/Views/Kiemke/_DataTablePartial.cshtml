@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<VimaruAsset.Models.KiemkeViewModel>
+<table id="kiemke" class="table table-striped table-bordered table-data">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th class="text-center"><input type="checkbox" id="checkall" /></th>
+            <th>Tên bộ phận</th>
+            <th>Địa chỉ</th>
+            <th>Số lượng tài sản</th>
+            <th>Quản lý</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item != null)
+            {
+        <tr>
+            <td></td>
+            <td class="text-center"><input type="checkbox" class="checkitem" id="@item.Department.Id" /></td>
+            <td>@item.Department.Name</td>
+            <td>@item.Department.Note</td>
+            <td>@item.AssetCount</td>
+            <td>@item.Department.ManagerName</td>
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>
