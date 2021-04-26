@@ -72,7 +72,7 @@
                                         @if (listType != null)
                                         {
                                             <select class="form-control border-info" name="AssetTypeS" id="AssetTypeS">
-                                                <option value="">------Chọn------</option>
+                                                <option value="________">------------</option>
                                                 @foreach (var item in listType)
                                                 {
                                                     <option value="@item.Id"> @item.AssetTypeName</option>
@@ -87,7 +87,7 @@
                                         @if (listGroup != null)
                                         {
                                             <select class="form-control border-info" name="AssetGroupS" id="AssetGroupS">
-                                                <option value="">------Chọn------</option>
+                                                <option value="________">------------</option>
                                                 @foreach (var item in listGroup)
                                                 {
                                                     <option value="@item.Id"> @item.Name</option>

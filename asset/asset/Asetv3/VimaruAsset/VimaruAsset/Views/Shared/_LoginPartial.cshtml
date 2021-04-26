@@ -198,6 +198,9 @@
                 <li class="nav-item item-single">
                     <a asp-controller="Assets" asp-action="Index" class="nav-link"><i class="far fa-clipboard"></i><span>Danh sách tài sản</span></a>
                 </li>
+                <li class="nav-item item-single">
+                   <a class="nav-link" asp-controller="Reduction" asp-action="Index"><i class="fas fa-arrow-left"></i> <span>Chuyển giao</span></a>
+                </li>
                 @if (!User.IsInRole("Thường"))
                 {
                     <li class="nav-item item-single">
@@ -243,7 +246,7 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-minus-square"></i> <span>Giảm tài sản</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" asp-controller="Reduction" asp-action="Index">Chuyển giao</a></li>
+
                             @*<li><a class="nav-link" asp-controller="SellAsset" asp-action="Index">Bán/Cho thuê tài sản</a></li>*@
                             <li><a class="nav-link" asp-controller="ReductionHistories" asp-action="Index">Lịch sử giảm tài sản</a></li>
 

@@ -9929,25 +9929,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hieuh\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Cheem\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\asset 27-2\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\VimaruAsset.csproj",
+      "projectUniqueName": "C:\\Users\\Cheem\\Documents\\GitHub\\assetnew\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\VimaruAsset.csproj",
       "projectName": "VimaruAsset",
-      "projectPath": "D:\\asset 27-2\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\VimaruAsset.csproj",
-      "packagesPath": "C:\\Users\\hieuh\\.nuget\\packages\\",
-      "outputPath": "D:\\asset 27-2\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\obj\\",
+      "projectPath": "C:\\Users\\Cheem\\Documents\\GitHub\\assetnew\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\VimaruAsset.csproj",
+      "packagesPath": "C:\\Users\\Cheem\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Cheem\\Documents\\GitHub\\assetnew\\asset\\asset\\Asetv3\\VimaruAsset\\VimaruAsset\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\hieuh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Cheem\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -9960,6 +9958,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -9971,6 +9970,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "DotNetZip": {
             "target": "Package",
@@ -10041,7 +10041,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
